@@ -1,8 +1,8 @@
 @font-face {
 	font-family: Inter;
 	font-weight: 400;
-	src: url('../fonts/inter-regular.woff2') format('woff2'),
-		url('../fonts/inter-regular.woff') format('woff');
+	src: url('../fonts/Inter-Regular.woff2') format('woff2'),
+		url('../fonts/Inter-Regular.woff') format('woff');
 }
 
 html {
@@ -75,4 +75,8 @@ fieldset {
 	max-width: calc(var(--width) + var(--padding) * 2);
 	margin: 0 auto;
 	padding: 0 var(--padding);
+}
+
+.blue-text {
+	color: #2a18ff;
 }
