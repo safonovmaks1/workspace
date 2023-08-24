@@ -20,11 +20,11 @@
 }
 
 .checbox__input::after {
-	content: '';
+	content: "";
 	position: absolute;
 	inset: 0;
 	display: block;
-	background: url('../img/check.svg') no-repeat center;
+	background: url("../img/check.svg") no-repeat center;
 	opacity: 0;
 	transition: opacity 0.2s ease-in-out;
 }
