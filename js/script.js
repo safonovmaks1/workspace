@@ -23,7 +23,7 @@ const createCard = vacancy => `
 			<li class="vacancy__field">от ${parseInt(vacancy.salary).toLocaleString()}₽</li>
 			<li class="vacancy__field">${vacancy.format}</li>
 			<li class="vacancy__field">${vacancy.type}</li>
-			<li class="vacancy__field">${vacancy.expirience}</li>
+			<li class="vacancy__field">${vacancy.experience}</li>
 	</article>
 `;
 
@@ -104,6 +104,12 @@ const renderModal = data => {
 	modalMain.append(modalClose);
 	modal.append(modalMain);
 	document.body.append(modal);
+
+	modal.addEventListener("click", ({ target }) => {
+		if (target === modal || target.closest(".modal__close")) {
+			modal.remove();
+		}
+	});
 };
 
 const openModal = id => {
@@ -143,6 +149,8 @@ const init = () => {
 		},
 		renderError
 	);
+
+	// Modal
 
 	cardsList.addEventListener("click", ({ target }) => {
 		const vacancyCard = target.closest(".vacancy");
