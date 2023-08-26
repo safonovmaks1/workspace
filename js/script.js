@@ -1,6 +1,7 @@
 const API_URL = "https://workspace-methed.vercel.app/";
 const LOCATION_URL = "api/locations";
 const VACANCY_URL = "api/vacancy";
+const BOT_TOKEN = "6383897875:AAHeB3iwE117OQTqCHO9wHwzgsdca3K6ZAE";
 
 const cardsList = document.querySelector(".cards__list");
 
@@ -111,11 +112,39 @@ const createDetailVacancy = ({
 			</ul>
 		</div>
 
-		<p class="detail__resume">
-			Отправляйте резюме на <a class="blue-text" href="${email}">${email}</a>
-		</p>
+		${
+			isNaN(parseInt(id.slice(-1)))
+				? `
+				<p class="detail__resume">
+					Отправляйте резюме на <a class="blue-text" href="${email}">${email}</a>
+				</p>
+			`
+				: `
+				<form class="detail__tg">
+					<input class="detail__input" type="email" name="message" placeholder="Напишите свой email для отклика" />
+					<input name="vacancyId" type="hidden" value="${id}" />
+					<button class="detail__btn">Отправить</button>
+				</form>
+			`
+		}
+		
 	</article>
 `;
+
+const sendTelegram = modal => {
+	modal.addEventListener("submit", e => {
+		e.preventDefault();
+		const form = e.target.closest(".detail__tg");
+		const userId = "46106862";
+		const text = `Отклик на вакансию ${form.vacancyId.value}, email:${form.message.value}`;
+
+		const urlBot = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${userId}&text=${text}`;
+
+		fetch(urlBot)
+			.then(res => alert("1"))
+			.catch(err => alert("0"));
+	});
+};
 
 const renderModal = data => {
 	const modal = document.createElement("div");
@@ -145,6 +174,8 @@ const renderModal = data => {
 			modal.remove();
 		}
 	});
+
+	sendTelegram(modal);
 };
 
 const openModal = id => {
@@ -171,6 +202,7 @@ const init = () => {
 	const citySelector = document.querySelector("#city");
 	const cityChoices = new Choices(citySelector, {
 		itemSelectText: "",
+		searchEnabled: false,
 	});
 
 	getData(
