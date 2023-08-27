@@ -195,8 +195,54 @@ const observer = new IntersectionObserver(
 	}
 );
 
+const openFIlter = (btn, dropdown, classNameBtn, classNameDd) => {
+	dropdown.style.height = `${dropdown.scrollHeight}px`;
+	btn.classList.add(classNameBtn);
+	dropdown.classList.add(classNameDd);
+};
+
+const closeFIlter = (btn, dropdown, classNameBtn, classNameDd) => {
+	btn.classList.remove(classNameBtn);
+	dropdown.classList.remove(classNameDd);
+	dropdown.style.height = "";
+};
+
 const init = () => {
 	const filterForm = document.querySelector(".filter__form");
+	const vacanciesFilterBtn = document.querySelector(".vacancies__filter-btn");
+	const vacanciesFilter = document.querySelector(".vacancies__filter");
+
+	vacanciesFilterBtn.addEventListener("click", () => {
+		if (vacanciesFilterBtn.classList.contains("vacancies__filter-btn_active")) {
+			closeFIlter(
+				vacanciesFilterBtn,
+				vacanciesFilter,
+				"vacancies__filter-btn_active",
+				"vacancies__filter_active"
+			);
+		} else {
+			openFIlter(
+				vacanciesFilterBtn,
+				vacanciesFilter,
+				"vacancies__filter-btn_active",
+				"vacancies__filter_active"
+			);
+		}
+	});
+
+	window.addEventListener("resize", () => {
+		if (vacanciesFilterBtn.classList.contains("vacancies__filter-btn_active")) {
+			// 1)
+			// vacanciesFilter.style.height = `${vacanciesFilter.scrollHeight}px`;
+			// 2)
+			closeFIlter(
+				vacanciesFilterBtn,
+				vacanciesFilter,
+				"vacancies__filter-btn_active",
+				"vacancies__filter_active"
+			);
+		}
+	});
 
 	// Select city
 	const citySelector = document.querySelector("#city");
@@ -239,6 +285,15 @@ const init = () => {
 		}
 	});
 
+	cardsList.addEventListener("keydown", ({ code, target }) => {
+		const vacancyCard = target.closest(".vacancy");
+		if ((code === "Enter" || code === "NumpadEnter") && vacancyCard) {
+			const vacancyId = vacancyCard.dataset.id;
+			openModal(vacancyId);
+			target.blur();
+		}
+	});
+
 	// Filter
 
 	filterForm.addEventListener("submit", event => {
@@ -251,9 +306,18 @@ const init = () => {
 			urlWithParam.searchParams.append(key, value);
 		});
 
-		getData(urlWithParam, renderVacancy, renderError).then(() => {
-			lastUrl = urlWithParam;
-		});
+		getData(urlWithParam, renderVacancy, renderError)
+			.then(() => {
+				lastUrl = urlWithParam;
+			})
+			.then(() => {
+				closeFIlter(
+					vacanciesFilterBtn,
+					vacanciesFilter,
+					"vacancies__filter-btn_active",
+					"vacancies__filter_active"
+				);
+			});
 	});
 };
 

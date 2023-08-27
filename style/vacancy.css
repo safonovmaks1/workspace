@@ -4,6 +4,15 @@
 	padding: 16px;
 	height: 100%;
 	cursor: pointer;
+	border: 2px solid transparent;
+}
+
+.vacancy:hover {
+	background-color: #f9faff;
+}
+
+.vacancy:focus-visible {
+	border-color: 2px solid #a6adff;
 }
 
 .vacancy__img {
@@ -29,7 +38,4 @@
 
 .vacancy__field {
 	color: #ccc;
-}
-
-@media (max-width: 940px) {
 }

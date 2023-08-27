@@ -13,6 +13,20 @@
 	border-radius: 8px;
 	background-color: #a6adff;
 	font-size: 20px;
+	border: 2px solid transparent;
+	transition-property: color, backgroung-color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.header__link:hover {
+	background-color: #2a18ff;
+	color: #fff;
+}
+
+.header__link:focus-visible {
+	border-color: 2px solid #4f58be;
+	background: #a6adff;
 }
 
 @media (max-width: 1140px) {
@@ -27,7 +41,7 @@
 	}
 
 	.header__link {
-		padding: 10px 16px;
+		padding: 8px 23px;
 		font-size: 14px;
 	}
 }
